@@ -4,7 +4,7 @@ const adminController = require('../controllers/adminController')
 const auth = require('../middlewares/auth')
 const router = express.Router()
 
-router.post('/login',validation.userValidation,adminController.adminLogin) 
+router.post('/login',validation.loginValidation,adminController.adminLogin) 
 router.get('/getUsers',auth.verifyAdminToken,adminController.getUsers) 
 router.post('/addAdmin',auth.verifyAdminToken,adminController.addAdmin) 
 router.post('/addCategory',auth.verifyAdminToken,validation.addCategoryValidation,adminController.addCategory)

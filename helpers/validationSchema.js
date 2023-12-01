@@ -6,6 +6,11 @@ const userValidationSchema = Joi.object({
     password:Joi.string().min(4).required()
 })
 
+const loginValidationSchema = Joi.object({
+    email: Joi.string().email().lowercase().required(),
+    password:Joi.string().min(4).required()
+})
+
 const editProfileValidationSchema = Joi.object({
     newName:Joi.string().required(),
     newMail: Joi.string().email().lowercase().required(),
@@ -32,5 +37,6 @@ module.exports = {
     editProfileValidationSchema,
     addCategoryValidationSchema,
     addMenuValidationSchema,
-    editMenuValidationSchema
+    editMenuValidationSchema,
+    loginValidationSchema
 }
