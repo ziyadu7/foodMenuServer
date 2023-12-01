@@ -6,6 +6,12 @@ const userValidationSchema = Joi.object({
     password:Joi.string().min(4).required()
 })
 
+const editProfileValidationSchema = Joi.object({
+    newName:Joi.string().required(),
+    newMail: Joi.string().email().lowercase().required(),
+})
+
 module.exports = {
-    userValidationSchema
+    userValidationSchema,
+    editProfileValidationSchema
 }
