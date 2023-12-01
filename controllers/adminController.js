@@ -23,6 +23,16 @@ const adminLogin = async (req, res) => {
     }
 }
 
+const getUsers = async (req,res)=>{
+    try {
+        const users = await userModel.find({isAdmin:false})
+        res.status(200).json({users})
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ errMsg: "Server Error" })
+    }
+}
+
 const addAdmin = async (req, res) => {
     try {
         const { email } = req.body
@@ -76,5 +86,6 @@ module.exports = {
     addAdmin,
     addCategory,
     addMenu,
-    editMenu
+    editMenu,
+    getUsers
 }
