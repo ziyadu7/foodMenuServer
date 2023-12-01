@@ -25,8 +25,8 @@ const adminLogin = async (req, res) => {
 
 const addAdmin = async (req, res) => {
     try {
-        const { userId } = req.body
-        await userModel.updateOne({ _id: userId }, { $set: { isAdmin: true } })
+        const { email } = req.body
+        await userModel.updateOne({email}, { $set: { isAdmin: true } })
         res.status(200).json({ message: "User role changed" })
     } catch (error) {
         console.log(error);

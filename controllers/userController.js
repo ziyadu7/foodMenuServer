@@ -54,15 +54,14 @@ const login = async (req,res)=>{
 const editProfile = async (req,res)=>{
     try {
 
-        const {newMail,newName} = req.body
-        const {id} = req.payload
+        const {email,newMail,newName} = req.body
 
         const isExist = await userModel.findOne({email:newMail})
 
         if(isExist){
             return res.status(409).json({errMsg:"User alredy exist with the email,Please use other mail"})
         }else{
-            await userModel.updateOne({_id:id},{$set:{email:newMail,name:newName}})
+            await userModel.updateOne({email},{$set:{email:newMail,name:newName}})
             res.status(200).json({message:'Profile edited successfully'})
         }
 
