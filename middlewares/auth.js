@@ -3,7 +3,7 @@ const userModel = require('../models/userModel')
 require('dotenv').config()
 
 module.exports = {
-    generateToken: (id,role) => {
+    generateToken: (id, role) => {
         const token = jwt.sign({ id, role }, process.env.JWTSECRET)
         return token
     },
@@ -17,13 +17,13 @@ module.exports = {
             if (token.startsWith('Bearer')) {
                 token = token.slice(7, token.length).trimLeft()
             }
-            
+
             const verified = jwt.verify(token, process.env.JWTSECRET)
 
             if (verified.role === 'user') {
-                const user = await userModel.findOne({_id:verified.id})
-                    req.payload = verified
-                    next()
+                await userModel.findOne({ _id: verified.id })
+                req.payload = verified
+                next()
             } else {
                 return res.status(403).json({ errMsg: "Acess Denied" })
             }
@@ -57,5 +57,5 @@ module.exports = {
             res.status(500).json({ errMsg: "Server Error" })
         }
     }
-    
+
 }

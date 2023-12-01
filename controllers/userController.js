@@ -1,7 +1,18 @@
 const sha256 = require('js-sha256');
 const userModel = require('../models/userModel');
 const { generateToken } = require('../middlewares/auth');
+const menuModel = require('../models/menuModel');
 require('dotenv').config()    
+
+const getMenu = async (req,res) =>{
+    try {
+        const menu = await menuModel.find()
+        res.status(200).json({menu})
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({errMsg:"Server Error"})
+    }
+}
 
 const register = async (req,res)=>{
     try {
@@ -64,5 +75,6 @@ const editProfile = async (req,res)=>{
 module.exports = {
     register,
     login,
-    editProfile
+    editProfile,
+    getMenu
 }
