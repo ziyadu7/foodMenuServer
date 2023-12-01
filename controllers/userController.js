@@ -17,7 +17,6 @@ const getMenu = async (req,res) =>{
 const register = async (req,res)=>{
     try {
         const {name,email,password} = req.body
-        
         const isExist = await userModel.findOne({email:email})
         if(isExist){
             return res.status(409).json({errMsg:"User alredy exist"})
@@ -43,7 +42,7 @@ const login = async (req,res)=>{
             const token = generateToken(user._id, 'user')
             res.status(200).json({ message: 'user login successfully',token})
         }else{
-            return res.status(400).json({ errMsg: "Email and password not match" })
+            return res.status(400).json({ errMsg: "Email and password not match or you are not an admin" })
         }
     } catch (error) {
         console.log(error);

@@ -5,7 +5,7 @@ const userRouter = require('./router/userRouter')
 const cors = require('cors')
 const app = express()
 
-app.use(express.json({ limit: '100mb', extended: true }))
+app.use(express.json())
 app.use(cors('*'))
 connectDb()
 app.listen(process.env.PORT || 4000, () => {

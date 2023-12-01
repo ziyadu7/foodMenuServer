@@ -1,4 +1,4 @@
-const { userValidationSchema,editProfileValidationSchema } = require('../helpers/validationSchema')
+const { userValidationSchema,editProfileValidationSchema,addCategoryValidationSchema } = require('../helpers/validationSchema')
 
 module.exports = {
     userValidation: async (req, res, next) => {
@@ -16,6 +16,19 @@ module.exports = {
     editProfileValidation: async (req, res, next) => {
         try {
             await editProfileValidationSchema.validateAsync(req.body)
+            next()
+        } catch (error) {
+            if (error.isJoi == true) {
+                error.status = 422
+                res.status(422).json({ errMsg: error.message })
+            }
+            console.log(error.message);
+        }
+    },
+
+    addCategoryValidation:async (req,res,next)=>{
+        try {
+            await addCategoryValidationSchema.validateAsync(req.body)
             next()
         } catch (error) {
             if (error.isJoi == true) {

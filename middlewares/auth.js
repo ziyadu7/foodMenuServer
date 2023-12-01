@@ -43,9 +43,9 @@ module.exports = {
             if (token.startsWith('Bearer')) {
                 token = token.slice(7, token.length).trimLeft()
             }
-
+            
             const verified = jwt.verify(token, process.env.JWTSECRET)
-
+            
             if (verified.role === 'admin') {
                 req.payload = verified
                 next()
@@ -54,6 +54,7 @@ module.exports = {
             }
 
         } catch (error) {
+            console.log(error);
             res.status(500).json({ errMsg: "Server Error" })
         }
     }

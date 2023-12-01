@@ -11,7 +11,12 @@ const editProfileValidationSchema = Joi.object({
     newMail: Joi.string().email().lowercase().required(),
 })
 
+const addCategoryValidationSchema = Joi.object({
+    categoryName:Joi.string().required()
+})
+
 module.exports = {
     userValidationSchema,
-    editProfileValidationSchema
+    editProfileValidationSchema,
+    addCategoryValidationSchema
 }
