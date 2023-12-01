@@ -8,7 +8,7 @@ router.post('/login',validation.userValidation,adminController.adminLogin)
 router.get('/getUsers',auth.verifyAdminToken,adminController.getUsers) 
 router.post('/addAdmin',auth.verifyAdminToken,adminController.addAdmin) 
 router.post('/addCategory',auth.verifyAdminToken,validation.addCategoryValidation,adminController.addCategory)
-router.post('/addMenu',auth.verifyAdminToken,adminController.addMenu)
-router.post('/editMenu',auth.verifyAdminToken,adminController.editMenu)
+router.post('/addMenu',auth.verifyAdminToken,validation.addMenuValidation,adminController.addMenu)
+router.post('/editMenu',auth.verifyAdminToken,validation.editMenuValidation,adminController.editMenu)
 
 module.exports = router

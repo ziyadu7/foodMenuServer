@@ -23,10 +23,10 @@ const adminLogin = async (req, res) => {
     }
 }
 
-const getUsers = async (req,res)=>{
+const getUsers = async (req, res) => {
     try {
-        const users = await userModel.find({isAdmin:false})
-        res.status(200).json({users})
+        const users = await userModel.find({ isAdmin: false })
+        res.status(200).json({ users })
     } catch (error) {
         console.log(error);
         return res.status(500).json({ errMsg: "Server Error" })
@@ -36,7 +36,7 @@ const getUsers = async (req,res)=>{
 const addAdmin = async (req, res) => {
     try {
         const { email } = req.body
-        await userModel.updateOne({email}, { $set: { isAdmin: true } })
+        await userModel.updateOne({ email }, { $set: { isAdmin: true } })
         res.status(200).json({ message: "User role changed" })
     } catch (error) {
         console.log(error);
@@ -75,10 +75,15 @@ const addMenu = async (req, res) => {
 
 const editMenu = async (req, res) => {
 
-    const { menuId, foodName, categoryId, subCategory } = req.body
+    try {
+        const { menuId, foodName, categoryId, subCategory } = req.body
 
-    await menuModel.updateOne({ _id: menuId }, { $set: { foodName, categoryId, subCategory } })
-    res.status(200).json({message:'Menu edited successfully'})
+        await menuModel.updateOne({ _id: menuId }, { $set: { foodName, categoryId, subCategory } })
+        res.status(200).json({ message: 'Menu edited successfully' })
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ errMsg: "Server Error" })
+    }
 }
 
 module.exports = {
