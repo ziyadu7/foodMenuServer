@@ -35,9 +35,13 @@ const getUsers = async (req, res) => {
 
 const addAdmin = async (req, res) => {
     try {
-        const { email } = req.body
-        await userModel.updateOne({ email }, { $set: { isAdmin: true } })
-        res.status(200).json({ message: "User role changed" })
+        const { id } = req.body
+        const isUpdated = await userModel.updateOne({ _id:id }, { $set: { isAdmin: true } })
+        if(isUpdated.modifiedCount!=0){
+            return res.status(200).json({ message: "User role changed" })
+        }else{
+            return res.status(400).json({errMsg:"User role not changed or user not found"})
+        }
     } catch (error) {
         console.log(error);
         return res.status(500).json({ errMsg: "Server Error" })
