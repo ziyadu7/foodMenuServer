@@ -2,6 +2,7 @@ const sha256 = require('js-sha256');
 const userModel = require('../models/userModel');
 const { generateToken } = require('../middlewares/auth');
 const menuModel = require('../models/menuModel');
+const categoryModel = require('../models/categoryModel');
 require('dotenv').config()  
 
 const adminLogin = async (req,res)=>{
@@ -33,7 +34,29 @@ const addAdmin = async (req,res)=>{
     }
 }
 
+const addCategory = async (req,res)=>{
+    try {
+        const {categoryName} = req.body
+        await categoryModel.create({categoryName})
+        res.status(200).json({message:"Category added successfully"})
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({errMsg:"Server Error"})
+    }
+}
+
+const addMenu = async (req,res)=>{
+
+}
+
+const editMenu = async (req,res)=>{
+
+}
+
 module.exports = {
     adminLogin,
-    addAdmin
+    addAdmin,
+    addCategory,
+    addMenu,
+    editMenu
 }
