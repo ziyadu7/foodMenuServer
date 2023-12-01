@@ -34,7 +34,7 @@ module.exports = {
         }
     },
 
-    verifySuperAdminToken: async (req, res, next) => {
+    verifyAdminToken: async (req, res, next) => {
         try {
             let token = req.headers.authorization
             if (!token) {
