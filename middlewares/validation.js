@@ -1,6 +1,6 @@
-const userValidationSchema = require('../helpers/userValidationSchema')
+const {userValidationSchema} = require('../helpers/validationSchema')
 
-export default {
+module.exports = {
     userValidation:async (req,res,next)=>{
         try {
             await userValidationSchema.validateAsync(req.body)
