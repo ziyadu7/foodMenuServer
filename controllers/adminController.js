@@ -46,7 +46,8 @@ const addCategory = async (req,res)=>{
 }
 
 const addMenu = async (req,res)=>{
-    // HERE SUB CATEGORY WILL BE ARRAY OF STRINGS EX:-['Chicken', 'gravy',' curry']
+  try {
+      // HERE SUB CATEGORY WILL BE ARRAY OF STRINGS EX:-['Chicken', 'gravy',' curry']
     // CATEGORY IS LIKE EX:- Chinese, Arabian, Panjabi, Kerala
 
     const {foodName,categoryId,subCategory} = req.body
@@ -56,16 +57,23 @@ const addMenu = async (req,res)=>{
         subCategory
     })
     res.status(200).json({message:"Menu added successfully"})
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({errMsg:"Server Error"})
+  }
 }
 
-const editMenu = async (req,res)=>{
+// const editMenu = async (req,res)=>{
 
-}
+//     const {menuId,foodName,categoryId,subCategory} = req.body
+
+//     await menuModel.updateOne({_id:menuId},{$set:{foodName,categoryId,subCategory}})
+// }
 
 module.exports = {
     adminLogin,
     addAdmin,
     addCategory,
     addMenu,
-    editMenu
+    // editMenu
 }
