@@ -3,77 +3,78 @@ const userModel = require('../models/userModel');
 const { generateToken } = require('../middlewares/auth');
 const menuModel = require('../models/menuModel');
 const categoryModel = require('../models/categoryModel');
-require('dotenv').config()  
+require('dotenv').config()
 
-const adminLogin = async (req,res)=>{
+const adminLogin = async (req, res) => {
     try {
-        const {email,password} = req.body
+        const { email, password } = req.body
 
         const admin = await userModel.findOne({ $and: [{ email }, { password: sha256(password + process.env.SALT) }] })
-        if(!admin||admin?.isAdmin==false){
+        if (!admin || admin?.isAdmin == false) {
             return res.status(403).json({ errMsg: "Acess Denied" })
-        }else{
+        } else {
             const token = generateToken(admin._id, 'admin')
-            res.status(200).json({message:"Admin login success",token})
+            res.status(200).json({ message: "Admin login success", token })
         }
 
     } catch (error) {
         console.log(error);
-        return res.status(500).json({errMsg:"Server Error"})
+        return res.status(500).json({ errMsg: "Server Error" })
     }
 }
 
-const addAdmin = async (req,res)=>{
+const addAdmin = async (req, res) => {
     try {
-        const {userId} = req.body
-        await userModel.updateOne({_id:userId},{$set:{isAdmin:true}})
-        res.status(200).json({message:"User role changed"})
+        const { userId } = req.body
+        await userModel.updateOne({ _id: userId }, { $set: { isAdmin: true } })
+        res.status(200).json({ message: "User role changed" })
     } catch (error) {
         console.log(error);
-        return res.status(500).json({errMsg:"Server Error"})
+        return res.status(500).json({ errMsg: "Server Error" })
     }
 }
 
-const addCategory = async (req,res)=>{
+const addCategory = async (req, res) => {
     try {
-        const {categoryName} = req.body
-        await categoryModel.create({categoryName})
-        res.status(200).json({message:"Category added successfully"})
+        const { categoryName } = req.body
+        await categoryModel.create({ categoryName })
+        res.status(200).json({ message: "Category added successfully" })
     } catch (error) {
         console.log(error);
-        return res.status(500).json({errMsg:"Server Error"})
+        return res.status(500).json({ errMsg: "Server Error" })
     }
 }
 
-const addMenu = async (req,res)=>{
-  try {
-      // HERE SUB CATEGORY WILL BE ARRAY OF STRINGS EX:-['Chicken', 'gravy',' curry']
-    // CATEGORY IS LIKE EX:- Chinese, Arabian, Panjabi, Kerala
+const addMenu = async (req, res) => {
+    try {
+        // HERE SUB CATEGORY WILL BE ARRAY OF STRINGS EX:-['Chicken', 'gravy',' curry']
+        // CATEGORY IS LIKE EX:- Chinese, Arabian, Panjabi, Kerala
 
-    const {foodName,categoryId,subCategory} = req.body
-    await menuModel.create({
-        foodName,
-        categoryId,
-        subCategory
-    })
-    res.status(200).json({message:"Menu added successfully"})
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({errMsg:"Server Error"})
-  }
+        const { foodName, categoryId, subCategory } = req.body
+        await menuModel.create({
+            foodName,
+            categoryId,
+            subCategory
+        })
+        res.status(200).json({ message: "Menu added successfully" })
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ errMsg: "Server Error" })
+    }
 }
 
-// const editMenu = async (req,res)=>{
+const editMenu = async (req, res) => {
 
-//     const {menuId,foodName,categoryId,subCategory} = req.body
+    const { menuId, foodName, categoryId, subCategory } = req.body
 
-//     await menuModel.updateOne({_id:menuId},{$set:{foodName,categoryId,subCategory}})
-// }
+    await menuModel.updateOne({ _id: menuId }, { $set: { foodName, categoryId, subCategory } })
+    res.status(200).json({message:'Menu edited successfully'})
+}
 
 module.exports = {
     adminLogin,
     addAdmin,
     addCategory,
     addMenu,
-    // editMenu
+    editMenu
 }
