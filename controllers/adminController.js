@@ -46,7 +46,16 @@ const addCategory = async (req,res)=>{
 }
 
 const addMenu = async (req,res)=>{
+    // HERE SUB CATEGORY WILL BE ARRAY OF STRINGS EX:-['Chicken', 'gravy',' curry']
+    // CATEGORY IS LIKE EX:- Chinese, Arabian, Panjabi, Kerala
 
+    const {foodName,categoryId,subCategory} = req.body
+    await menuModel.create({
+        foodName,
+        categoryId,
+        subCategory
+    })
+    res.status(200).json({message:"Menu added successfully"})
 }
 
 const editMenu = async (req,res)=>{

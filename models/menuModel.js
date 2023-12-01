@@ -4,7 +4,7 @@ const menuSchema = mongoose.Schema({
     foodName:{
         type:String
     },
-    category:{
+    categoryId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'category'
     },
